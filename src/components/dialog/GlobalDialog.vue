@@ -1,5 +1,6 @@
 <!-- The main global dialog to show various things -->
 <template>
+  <Dialog visible :pt:mask:style="{ display: 'none' }"></Dialog>
   <Dialog
     v-for="(item, index) in dialogStore.dialogStack"
     :key="item.key"
@@ -35,24 +36,18 @@
 </template>
 
 <script setup lang="ts">
-import { ZIndex } from '@primeuix/utils/zindex'
-import { usePrimeVue } from '@primevue/core'
+import { usePrimeVue } from 'primevue/config'
 import Dialog from 'primevue/dialog'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 
 import { useDialogStore } from '@/stores/dialogStore'
 
 const dialogStore = useDialogStore()
 
-const primevue = usePrimeVue()
+const { config } = usePrimeVue()
 
 const baseZIndex = computed(() => {
-  return primevue?.config?.zIndex?.modal ?? 1100
-})
-
-onMounted(() => {
-  const mask = document.createElement('div')
-  ZIndex.set('model', mask, baseZIndex.value)
+  return config.zIndex?.modal ?? 1100
 })
 </script>
 
